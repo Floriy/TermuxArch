@@ -84,16 +84,16 @@ _ISX86_
 axel -a --no-clobber http://"$CMIRROR/$RPATH/$IFILE" ||:
 elif [[ "$DM" = lftp ]]
 then
-lftpget http://"$CMIRROR/$RPATH"/"$HASHTYPE"sums.txt || lftpget http://"$CMIRROR/$RPATH"/"$HASHTYPE"sums.txt
+lftpget http://"$CMIRROR/$RPATH/$HASHTYPE"sums.txt || lftpget http://"$CMIRROR/$RPATH/$HASHTYPE"sums.txt
 _ISX86_
 lftpget -c http://"$CMIRROR/$RPATH/$IFILE" || lftpget -c http://"$CMIRROR/$RPATH/$IFILE"
 elif [[ "$DM" = wget ]]
 then
-wget "$DMVERBOSE" -N --show-progress http://"$CMIRROR/$RPATH/"$HASHTYPE"sums.txt
+wget "$DMVERBOSE" -N --show-progress http://"$CMIRROR/$RPATH/$HASHTYPE"sums.txt
 _ISX86_
 wget "$DMVERBOSE" --continue --show-progress http://"$CMIRROR/$RPATH/$IFILE"
 else
-curl "$DMVERBOSE" --fail --retry 4 -OL http://"$CMIRROR/$RPATH"/"$HASHTYPE"sums.txt
+curl "$DMVERBOSE" --fail --retry 4 -OL http://"$CMIRROR/$RPATH/$HASHTYPE"sums.txt
 _ISX86_
 curl "$DMVERBOSE" -C - --fail --retry 4 -OL http://"$CMIRROR/$RPATH/$IFILE"
 fi
