@@ -199,33 +199,33 @@ CMMDVL="$INSTALLDIR" && { cd "$CMMDVL" && printf '%s\n\n' "cd $CMMDVL" ; } || ex
 fi
 fi
 _CALLSYSTEM_
-_MD5CHECK_
+_HASHSUMCHECK_
 if [ "$KEEP" = 0 ]
 then
 _PRINTKEEP_
 else
 _PRINTCU_
-rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz.md5 ##  When KEEP=0 files *.tar.gz and *.tar.gz.md5 will remain on the system.
+rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz."$HASHTYPE" ##  When KEEP=0 files *.tar.gz and *.tar.gz.[b2, md5, ...] will remain on the system.
 _PRINTDONE_
 fi
 _PRINTCONFIGUP_
 _TOUCHUPSYS_
 }
 
-_MD5CHECK_() {
-if md5sum -c --quiet "$IFILE".md5 2> /dev/null
+_HASHSUMCHECK_() {
+if "$HASHTYPE"sum -c --quiet "$IFILE"."$HASHTYPE" 2> /dev/null
 then
-_PRINTMD5SUCCESS_
+_PRINTHASHSUMSUCCESS_
 printf "\\e[0;32m"
-_TASPINNER_ clock & _PREPROOT_ ; kill $! || _PRINTERRORMSG_ "_PREPROOT_ _MD5CHECK_ ${0##*/} necessaryfunctions.bash"
+_TASPINNER_ clock & _PREPROOT_ ; kill $! || _PRINTERRORMSG_ "_PREPROOT_ _HASHSUMCHECK_ ${0##*/} necessaryfunctions.bash"
 else
-if md5sum -c --quiet *.md5 2> /dev/null
+if "$HASHTYPE"sum -c --quiet *."$HASHTYPE" 2> /dev/null
 then
-_PRINTMD5SUCCESS_
+_PRINTHASHSUMSUCCESS_
 printf "\\e[0;32m"
-_TASPINNER_ clock & _PREPROOT_ ; kill $! || _PRINTERRORMSG_ "_PREPROOT_ _MD5CHECK_ ${0##*/} necessaryfunctions.bash"
+_TASPINNER_ clock & _PREPROOT_ ; kill $! || _PRINTERRORMSG_ "_PREPROOT_ _HASHSUMCHECK_ ${0##*/} necessaryfunctions.bash"
 else
-{ [[ "$KEEP" = 0 ]] && _PRINTKEEPEXIT_ ; exit 203 ; } || { _PRINTMD5ERROR_ && rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz.md5 ; exit 205 ; }
+{ [[ "$KEEP" = 0 ]] && _PRINTKEEPEXIT_ ; exit 203 ; } || { _PRINTHASHSUMERROR_ && rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz."$HASHTYPE" ; exit 205 ; }
 fi
 fi
 }

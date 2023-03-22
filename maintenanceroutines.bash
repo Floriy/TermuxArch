@@ -8,14 +8,14 @@
 _COPYIMAGE_() { # A systemimage.tar.gz file can be used: 'setupTermuxArch ./[path/]systemimage.tar.gz' and 'setupTermuxArch /absolutepath/systemimage.tar.gz'
 if [[ "$LCP" = "0" ]]
 then
-printf "%s\\n" "Copying $GFILE.md5 to $INSTALLDIR..."
-cp "$GFILE".md5  "$INSTALLDIR"
+printf "%s\\n" "Copying $GFILE.$HASHTYPE to $INSTALLDIR..."
+cp "$GFILE"."$HASHTYPE"  "$INSTALLDIR"
 printf "%s\\n" "Copying $GFILE to $INSTALLDIR..."
 cp "$GFILE" "$INSTALLDIR"
 elif [[ "$LCP" = "1" ]]
 then
-printf "%s\\n" "Copying $GFILE.md5 to $INSTALLDIR..."
-cp "$WDIR$GFILE".md5  "$INSTALLDIR"
+printf "%s\\n" "Copying $GFILE.$HASHTYPE to $INSTALLDIR..."
+cp "$WDIR$GFILE"."$HASHTYPE"  "$INSTALLDIR"
 printf "%s\\n" "Copying $GFILE to $INSTALLDIR..."
 cp "$WDIR$GFILE" "$INSTALLDIR"
 fi
@@ -87,9 +87,9 @@ _SPACEINFO_
 printf "\\n"
 _PREPINSTALLDIR_
 _COPYIMAGE_
-_MD5CHECK_
+_HASHSUMCHECK_
 _PRINTCU_
-rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz.md5
+rm -f "$INSTALLDIR"/*.tar.gz "$INSTALLDIR"/*.tar.gz."$HASHTYPE"
 _PRINTDONE_
 _PRINTCONFIGUP_
 _TOUCHUPSYS_

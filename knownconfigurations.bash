@@ -13,8 +13,8 @@
 ## DMVERBOSE="-v" 	##  uncomment for verbose download tool output with curl and wget;  For verbose output throughout runtime change this setting in file 'setupTermuxArch' also.
 ECHOEXEC=""		##  insert 'echo' to suppress most 'pacman' instructions from 'keys' file during runtime
 ECHOSYNC=""		##  insert 'echo' to only suppress 'pacman' syncing instructions from 'keys' file during runtime
-KEEP=0			##  change to 1 to delete downloaded image;  Testing the installation process repeatedly can be made easier and lighter on your Internet bandwidth and SAR with 'KEEP=0' and this fragment of code  'mkdir ~/arch; cp ~/ArchLinux*.tar.gz* ~/arch/' and similar.  The variable KEEP when set to 0 (true) will keep the downloaded image and md5 files instead of deleting them for possible reuse.  The root file system image and md5 files can be saved and used again with subsequent installations.
-USECACHEDIR=0		##  set to 0 in order to use cache directory;  This installation script uses a cache directory that can be used to cache all of the installation files in order to save wireless bandwidth upon subsequent reinstallation.  Variable `KEEP=0` should also be set to 0 in order to keep the downloaded image file and md5 files. The downloaded image and md5 files can be moved to CACHEDIR from INSTALLDIR/var/cache/pacman/pkg with the command 'trim' in order to avoid redownloading files in order to reinstall the Arch Linux system in Termux PRoot QEMU.
+KEEP=0			##  change to 1 to delete downloaded image;  Testing the installation process repeatedly can be made easier and lighter on your Internet bandwidth and SAR with 'KEEP=0' and this fragment of code  'mkdir ~/arch; cp ~/ArchLinux*.tar.gz* ~/arch/' and similar.  The variable KEEP when set to 0 (true) will keep the downloaded image and hashsum files instead of deleting them for possible reuse.  The root file system image and hashsum files can be saved and used again with subsequent installations.
+USECACHEDIR=0		##  set to 0 in order to use cache directory;  This installation script uses a cache directory that can be used to cache all of the installation files in order to save wireless bandwidth upon subsequent reinstallation.  Variable `KEEP=0` should also be set to 0 in order to keep the downloaded image file and hashsum files. The downloaded image and hashsum files can be moved to CACHEDIR from INSTALLDIR/var/cache/pacman/pkg with the command 'trim' in order to avoid redownloading files in order to reinstall the Arch Linux system in Termux PRoot QEMU.
 CACHLCTN="/storage/emulated/0"	##  change to external sdcard path if desired.
 CACHEDIR="$CACHLCTN/Android/data/com.termux/files/cache/archlinux/$ARCTEVAR/"
 PREFIXDATAFILES="$CACHLCTN/Android/data/com.termux/"
@@ -25,6 +25,7 @@ _AARCH64ANDROID_() {
 IFILE="ArchLinuxARM-aarch64-latest.tar.gz"
 CMIRROR="os.archlinuxarm.org"
 RPATH="os"
+HASHTYPE="md5"
 _MAKESYSTEM_
 }
 
@@ -32,6 +33,7 @@ _AARCH64CHROME_() {
 IFILE="ArchLinuxARM-aarch64-chromebook-latest.tar.gz"
 CMIRROR="os.archlinuxarm.org"
 RPATH="os"
+HASHTYPE="md5"
 _MAKESYSTEM_
 }
 
@@ -39,6 +41,7 @@ _ARMV5L_() {
 IFILE="ArchLinuxARM-armv5-latest.tar.gz"
 CMIRROR="os.archlinuxarm.org"
 RPATH="os"
+HASHTYPE="md5"
 _MAKESYSTEM_
 }
 
@@ -46,6 +49,7 @@ _ARMV7ANDROID_() {
 IFILE="ArchLinuxARM-armv7-latest.tar.gz"
 CMIRROR="os.archlinuxarm.org"
 RPATH="os"
+HASHTYPE="md5"
 _MAKESYSTEM_
 }
 
@@ -53,20 +57,23 @@ _ARMV7CHROME_() {
 IFILE="ArchLinuxARM-armv7-chromebook-latest.tar.gz"
 CMIRROR="os.archlinuxarm.org"
 RPATH="os"
+HASHTYPE="md5"
 _MAKESYSTEM_
 }
 
 ##  Information at https://www.archlinux.org/news/phasing-out-i686-support/ and https://archlinux32.org/ regarding why i686 is currently frozen at release 2017.03.01-i686.
 ##  UPDATE: These topics have the most current information about Arch Linux 32 [Implementing QEMU #25](https://github.com/TermuxArch/TermuxArch/issues/25) and  [[SOLVED - Hurrah!] Upgrading from a truly ancient install.](https://bbs.archlinux32.org/viewtopic.php?id=2982)
-_I686_() { # IFILE is read from md5sums.txt
+_I686_() { # IFILE is read from hashsums.txt
 CMIRROR="archive.archlinux.org"
 RPATH="iso/2017.03.01"
+HASHTYPE="md5"
 _MAKESYSTEM_
 }
 
-_X86_64_() { # IFILE is read from md5sums.txt
+_X86_64_() { # IFILE is read from hashsums.txt
 CMIRROR="mirror.rackspace.com"
 RPATH="archlinux/iso/latest"
+HASHTYPE="b2"
 _MAKESYSTEM_
 }
 
