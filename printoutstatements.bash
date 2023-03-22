@@ -149,8 +149,8 @@ printf "\\e[0;34m 🕛 > 🕙 \\e[1;34mReleasing termux-wake-lock: "
 }
 
 _PRINTDOWNLOADINGX86_() {
-printf '\033]2; 🕛 > 🕞 Downloading the Arch Linux system image checksum...  \007'
-printf "\\n\\e[0;34m 🕛 > 🕞 \\e[0;34mDownloading checksum from \\e[0;32mhttp://%s\\e[0;34m...\\n\\n\\e[0;32m" "$CMIRROR"
+printf '\033]2; 🕛 > 🕞 Downloading the Arch Linux system image hashsum...  \007'
+printf "\\n\\e[0;34m 🕛 > 🕞 \\e[0;34mDownloading hashsum from \\e[0;32mhttp://%s\\e[0;34m...\\n\\n\\e[0;32m" "$CMIRROR"
 }
 
 _PRINTDOWNLOADINGX86TWO_() {
@@ -159,13 +159,13 @@ printf "\\n\\e[0;34m 🕛 > 🕓 \\e[0;34mDownloading \\e[0;32m%s \\e[0;34mfrom 
 }
 
 _PRINTDOWNLOADINGFTCH_() {
-printf "\033]2;%s\007" " 🕛 > 🕓 Downloading the checksum and Arch Linux system image files...  "
-printf "\\e[0;34m 🕛 > 🕓 \\e[1;34mDownloading the checksum file and \\e[1;34m%s \\e[1;34mfrom the geographically local mirror \\e[1;32m%s\\e[1;34m.  If contact with the local mirror is not successful, run \\e[1;32mbash \\e[0;32m%s\\e[1;34m again.  Should the worldwide mirror not provide another geographically nearby server after a couple of attempts, use \\e[1;32mbash \\e[0;32m%s manual \\e[1;34mafter locating a local mirror from the Internet; The command \\e[1;32mbash \\e[0;32m%s help \\e[1;34mhas information about additional options.  \\e[1;37mDownload of %s pending Internet connection...\\n\\n\\e[0;32m" "$IFILE" "${NLCMIRROR:-MIRROR NOT FOUND}" "${0##*/}" "${0##*/}" "${0##*/}" "$IFILE"
+printf "\033]2;%s\007" " 🕛 > 🕓 Downloading the hashsum and Arch Linux system image files...  "
+printf "\\e[0;34m 🕛 > 🕓 \\e[1;34mDownloading the hashsum file and \\e[1;34m%s \\e[1;34mfrom the geographically local mirror \\e[1;32m%s\\e[1;34m.  If contact with the local mirror is not successful, run \\e[1;32mbash \\e[0;32m%s\\e[1;34m again.  Should the worldwide mirror not provide another geographically nearby server after a couple of attempts, use \\e[1;32mbash \\e[0;32m%s manual \\e[1;34mafter locating a local mirror from the Internet; The command \\e[1;32mbash \\e[0;32m%s help \\e[1;34mhas information about additional options.  \\e[1;37mDownload of %s pending Internet connection...\\n\\n\\e[0;32m" "$IFILE" "${NLCMIRROR:-MIRROR NOT FOUND}" "${0##*/}" "${0##*/}" "${0##*/}" "$IFILE"
 }
 
 _PRINT_DOWNLOADING_FTCHIT_() {
-printf "\033]2;%s\007" " 🕛 > 🕓 Downloading the checksum and $IFILE files...  "
-printf "\\e[0;34m 🕛 > 🕓 \\e[0;34mDownloading the checksum file and \\e[0;32m%s \\e[0;34m from \\e[0;32mhttp://%s\\e[0;34m...  \\e[1;37mThis may take a long time pending connection.\\n\\n\\e[0;32m" "$IFILE" "$CMIRROR"
+printf "\033]2;%s\007" " 🕛 > 🕓 Downloading the hashsum and $IFILE files...  "
+printf "\\e[0;34m 🕛 > 🕓 \\e[0;34mDownloading the hashsum file and \\e[0;32m%s \\e[0;34m from \\e[0;32mhttp://%s\\e[0;34m...  \\e[1;37mThis may take a long time pending connection.\\n\\n\\e[0;32m" "$IFILE" "$CMIRROR"
 }
 
 _PRINTCONFIGUP_() {
@@ -175,27 +175,27 @@ printf "\\n\\e[0;34m 🕛 > 🕤 \\e[1;34mArch Linux in Termux PRoot QEMU is ins
 
 _PRINTMAX_() {
 printf "\033]2;%s\007" "Please run 'bash ${0##*/}' again."
-printf "\\n\\e[07;1m\\e[31;1m 🔆 ＴｅｒｍｕｘＡｒｃｈ NOTICE: Maximum amount of attempts exceeded.\\e[34;1m\\e[30;1m\\n\\nPlease run 'bash %s' again.  See 'bash %s help' to resolve download errors.  If this keeps repeating, copy 'knownconfigurations.bash' to 'setupTermuxArchConfigs.bash' with preferred mirror.  After editing 'setupTermuxArchConfigs.bash', run 'bash %s' and 'setupTermuxArchConfigs.bash' loads automaticaly from the same directory.  Change mirror to desired geographic location to resolve md5sum errors.\\n\\nUser configurable variables are in 'setupTermuxArchConfigs.bash'.  To create this file from 'knownconfigurations.bash' in the working directory the command 'bash %s manual' can be used to create and edit 'setupTermuxArchConfigs.bash'.\\n\\nPlease run 'bash %s' again.\\n\\e[0;0m\\n" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}"
+printf "\\n\\e[07;1m\\e[31;1m 🔆 ＴｅｒｍｕｘＡｒｃｈ NOTICE: Maximum amount of attempts exceeded.\\e[34;1m\\e[30;1m\\n\\nPlease run 'bash %s' again.  See 'bash %s help' to resolve download errors.  If this keeps repeating, copy 'knownconfigurations.bash' to 'setupTermuxArchConfigs.bash' with preferred mirror.  After editing 'setupTermuxArchConfigs.bash', run 'bash %s' and 'setupTermuxArchConfigs.bash' loads automaticaly from the same directory.  Change mirror to desired geographic location to resolve hashsum errors.\\n\\nUser configurable variables are in 'setupTermuxArchConfigs.bash'.  To create this file from 'knownconfigurations.bash' in the working directory the command 'bash %s manual' can be used to create and edit 'setupTermuxArchConfigs.bash'.\\n\\nPlease run 'bash %s' again.\\n\\e[0;0m\\n" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}"
 }
 
 _PRINTKEEPEXIT_() {
-printf "\\n\\e[0;34m 🕛 > 🕕 \\e[1;34mNot removing files after FAILED check of download integrity files with md5sum.  \\e[37;1m%s  \\e[1;33m" "Please run '${0##*/}' again to continue a partial download.  Otherwise remove '$INSTALLDIR' and restart the installation from scratch if the download is complete and FAILED checking download integrity checksum error continues.  You can set KEEP=1 in file 'setupTermuxArchConfigs.bash' by running '${0##*/} manual' to disable the keep download image file feature that is disabled by default as after downloading the root image file as it might no longer be needed by the end user execept for reinstalling the Arch Linux system and similar.  The command 'bash ${0##*/} help' and the source code for TermuxArch have more information."
+printf "\\n\\e[0;34m 🕛 > 🕕 \\e[1;34mNot removing files after FAILED check of download integrity files with hashsum.  \\e[37;1m%s  \\e[1;33m" "Please run '${0##*/}' again to continue a partial download.  Otherwise remove '$INSTALLDIR' and restart the installation from scratch if the download is complete and FAILED checking download integrity hashsum error continues.  You can set KEEP=1 in file 'setupTermuxArchConfigs.bash' by running '${0##*/} manual' to disable the keep download image file feature that is disabled by default as after downloading the root image file as it might no longer be needed by the end user execept for reinstalling the Arch Linux system and similar.  The command 'bash ${0##*/} help' and the source code for TermuxArch have more information."
 }
 
 _PRINTKEEP_() {
-printf "\\n\\e[0;34m 🕛 > 🕗 \\e[1;34mNot removing files after checking download integrity with md5sum.  \\n"
+printf "\\n\\e[0;34m 🕛 > 🕗 \\e[1;34mNot removing files after checking download integrity with hashsum.  \\n"
 }
 
-_PRINTMD5CHECK_() {
-printf "\\n\\e[0;34m 🕛 > 🕠 \\e[1;34mChecking download integrity with md5sum.  \\e[37;1mThis may take a little while  \\e[1;33m"
+_PRINTHASHSUMCHECK_() {
+printf "\\n\\e[0;34m 🕛 > 🕠 \\e[1;34mChecking download integrity with hashsum.  \\e[37;1mThis may take a little while  \\e[1;33m"
 }
 
-_PRINTMD5ERROR_() {
+_PRINTHASHSUMERROR_() {
 printf "\033]2;%s\007" "Run 'bash ${0##*/}' again..."
-printf "\\n\\e[07;1m\\e[31;1m 🔆 ＴｅｒｍｕｘＡｒｃｈ SIGNAL md5sum mismatch! The download failed and was removed!\\e[30;1m  Run 'bash %s' again.  The command 'bash %s help' has more information.  This kind of error can go away, just like magic.  Waiting before executing %s again is recommended.  There are numerous reasons for checksum errors.  Proxies are one explaination.  Mirroring and mirrors are another explaination for md5sum errors.  An interrupted download is one more reason for an md5sum mismatch error.\\n	If this keeps repeating, file 'knownconfigurations.bash' can be copied to file 'setupTermuxArchConfigs.bash' with command 'bash %s manual' in order to choose a preferred mirror.  After editing 'setupTermuxArchConfigs.bash', command 'bash %s' loads file 'setupTermuxArchConfigs.bash' automaticaly from the same directory.  Change mirror to desired geographic location to resolve md5sum errors.\\n	User configurable variables are in 'setupTermuxArchConfigs.bash'.  In order to create this file from 'knownconfigurations.bash' in the working directory, the command 'bash %s manual' can be used to create and edit 'setupTermuxArchConfigs.bash'.\\n\\n	Please run command 'bash %s' again, or command 'bash %s manual' can be run which creates file '%sConfigs.bash' for editing.\\n\\e[0;0m\n" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}"
+printf "\\n\\e[07;1m\\e[31;1m 🔆 ＴｅｒｍｕｘＡｒｃｈ SIGNAL hashsum mismatch! The download failed and was removed!\\e[30;1m  Run 'bash %s' again.  The command 'bash %s help' has more information.  This kind of error can go away, just like magic.  Waiting before executing %s again is recommended.  There are numerous reasons for hashsum errors.  Proxies are one explaination.  Mirroring and mirrors are another explaination for hashsum errors.  An interrupted download is one more reason for an hashsum mismatch error.\\n	If this keeps repeating, file 'knownconfigurations.bash' can be copied to file 'setupTermuxArchConfigs.bash' with command 'bash %s manual' in order to choose a preferred mirror.  After editing 'setupTermuxArchConfigs.bash', command 'bash %s' loads file 'setupTermuxArchConfigs.bash' automaticaly from the same directory.  Change mirror to desired geographic location to resolve hashsum errors.\\n	User configurable variables are in 'setupTermuxArchConfigs.bash'.  In order to create this file from 'knownconfigurations.bash' in the working directory, the command 'bash %s manual' can be used to create and edit 'setupTermuxArchConfigs.bash'.\\n\\n	Please run command 'bash %s' again, or command 'bash %s manual' can be run which creates file '%sConfigs.bash' for editing.\\n\\e[0;0m\n" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}" "${0##*/}"
 }
 
-_PRINTMD5SUCCESS_() {
+_PRINTHASHSUMSUCCESS_() {
 printf "\\e]2;%s\\007" " 🕛 > 🕡 Unpacking $IFILE..."
 printf "\\n\\n\\e[0;34m 🕛 > 🕔 \\e[1;34mSystem image file download integrity check: \\e[1;32mDONE\\n\\n\\e[0;34m 🕛 > 🕡 \\e[1;34mUnpacking %s into %s.  The option to create Arch Linux system users is available through \\e[1;32maddauser\\e[1;34m.  Arch Linux user login from Termux with \\e[1;32m%s \\e[1;34mis now implemented.  Please see \\e[0;36mAbility for Scripts to Launch Commands for Arch Linux in Termux PRoot on Device\\e[1;34m https://github.com/sdrausty/TermuxArch/issues/54 for information how to use this option.  \\n\\nWhile waiting, any of these commands can be used \\e[0;36mdf\\e[1;34m, \\e[0;36mdu -hs\\e[1;34m, \\e[0;36mps\\e[1;34m, \\e[0;36mtop\\e[1;34m and \\e[0;36mwatch\\e[1;34m in a new Termux session to watch the unpacking while this session completes.  Use \\e[0;36mhelp man \\e[1;34mand \\e[0;36minfo man \\e[1;34mto learn more about your Linux system in the palm of your hand.  See The Linux Documentation Project http://tldp.org to learn more about Linux and CLI (command line interface) commands.\\n\\nIf simply scrolling the screen up by scrolling up does produce the desired effect, this method can be employed.  Long tap until the popup menu shows.  Then scroll up without loosing touch with the screen and without touching the popup menu.  \\e[1;37mUnpacking \\e[1;32m%s\\e[1;37m will take a long time;  Please be patient   \\e[0m" "$IFILE" "$INSTALLDIR" "$STARTBIN" "$IFILE"
 }

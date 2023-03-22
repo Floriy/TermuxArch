@@ -8,19 +8,19 @@ _FTCHIT_() {
 _PRINT_DOWNLOADING_FTCHIT_
 if [[ "$DM" = aria2 ]]
 then
-aria2c --continue -Z http://"$CMIRROR/$RPATH/$IFILE".md5 http://"$CMIRROR/$RPATH/$IFILE"
+aria2c --continue -Z http://"$CMIRROR/$RPATH/$IFILE"."$HASHTYPE" http://"$CMIRROR/$RPATH/$IFILE"
 elif [[ "$DM" = axel ]]
 then
-axel -a --no-clobber http://"$CMIRROR/$RPATH/$IFILE".md5 ||:
+axel -a --no-clobber http://"$CMIRROR/$RPATH/$IFILE"."$HASHTYPE" ||:
 axel -a --no-clobber http://"$CMIRROR/$RPATH/$IFILE" ||:
 elif [[ "$DM" = lftp ]]
 then
-lftpget -c http://"$CMIRROR/$RPATH/$IFILE".md5 http://"$CMIRROR/$RPATH/$IFILE"
+lftpget -c http://"$CMIRROR/$RPATH/$IFILE"."$HASHTYPE" http://"$CMIRROR/$RPATH/$IFILE"
 elif [[ "$DM" = wget ]]
 then
-wget "$DMVERBOSE" --continue --show-progress -N http://"$CMIRROR/$RPATH/$IFILE".md5 http://"$CMIRROR/$RPATH/$IFILE"
+wget "$DMVERBOSE" --continue --show-progress -N http://"$CMIRROR/$RPATH/$IFILE"."$HASHTYPE" http://"$CMIRROR/$RPATH/$IFILE"
 else
-curl "$DMVERBOSE" -C - --fail --retry 4 -OL {"http://$CMIRROR/$RPATH/$IFILE.md5,http://$CMIRROR/$RPATH/$IFILE"}
+curl "$DMVERBOSE" -C - --fail --retry 4 -OL {"http://$CMIRROR/$RPATH/$IFILE."$HASHTYPE",http://$CMIRROR/$RPATH/$IFILE"}
 fi
 }
 
@@ -33,7 +33,7 @@ aria2c http://"$CMIRROR" 1>"$TMPDIR/global2localmirror"
 NLCMIRROR="$(grep Redirecting "$TMPDIR/global2localmirror" | awk {'print $8'})"
 _PRINTDONE_
 _PRINTDOWNLOADINGFTCH_
-aria2c --continue -m 4 -Z "$NLCMIRROR/$RPATH/$IFILE".md5 "$NLCMIRROR/$RPATH/$IFILE"
+aria2c --continue -m 4 -Z "$NLCMIRROR/$RPATH/$IFILE"."$HASHTYPE" "$NLCMIRROR/$RPATH/$IFILE"
 elif [[ "$DM" = axel ]]
 then
 axel -vv http://"$CMIRROR" 1 > "$TMPDIR/global2localmirror"
@@ -41,7 +41,7 @@ NLCMIRR="$(grep downloading "$TMPDIR/global2localmirror" | awk {'print $5'})"
 NLCMIRROR="${NLCMIRR::-3}"
 _PRINTDONE_
 _PRINTDOWNLOADINGFTCH_
-axel -a --no-clobber http://"$NLCMIRROR/$RPATH/$IFILE".md5 ||:
+axel -a --no-clobber http://"$NLCMIRROR/$RPATH/$IFILE"."$HASHTYPE" ||:
 axel -a --no-clobber http://"$NLCMIRROR/$RPATH/$IFILE" ||:
 elif [[ "$DM" = lftp ]]
 then
@@ -51,21 +51,21 @@ NLCMIRR="${NLCMI//\`}"
 NLCMIRROR="${NLCMIRR//\'}"
 _PRINTDONE_
 _PRINTDOWNLOADINGFTCH_
-lftpget -c "$NLCMIRROR/$RPATH/$IFILE".md5 "$NLCMIRROR/$RPATH/$IFILE"
+lftpget -c "$NLCMIRROR/$RPATH/$IFILE"."$HASHTYPE" "$NLCMIRROR/$RPATH/$IFILE"
 elif [[ "$DM" = wget ]]
 then
 wget -v -O/dev/null "$CMIRROR" 2>"$TMPDIR/global2localmirror"
 NLCMIRROR="$(grep Location "$TMPDIR/global2localmirror" | awk {'print $2'})"
 _PRINTDONE_
 _PRINTDOWNLOADINGFTCH_
-wget "$DMVERBOSE" --continue --show-progress "$NLCMIRROR/$RPATH/$IFILE".md5 "$NLCMIRROR/$RPATH/$IFILE"
+wget "$DMVERBOSE" --continue --show-progress "$NLCMIRROR/$RPATH/$IFILE"."$HASHTYPE" "$NLCMIRROR/$RPATH/$IFILE"
 else
 curl -v "$CMIRROR" &> "$TMPDIR/global2localmirror"
 NLCMIRROR="$(grep Location "$TMPDIR/global2localmirror" | awk {'print $3'})"
 NLCMIRROR="${NLCMIRROR%$'\r'}" # remove trailing carrage return: strip bash variable of non printing characters
 _PRINTDONE_
 _PRINTDOWNLOADINGFTCH_
-curl "$DMVERBOSE" -C - --fail --retry 4 -OL {"$NLCMIRROR/$RPATH/$IFILE.md5,$NLCMIRROR/$RPATH/$IFILE"}
+curl "$DMVERBOSE" -C - --fail --retry 4 -OL {"$NLCMIRROR/$RPATH/$IFILE."$HASHTYPE",$NLCMIRROR/$RPATH/$IFILE"}
 fi
 rm -f "$TMPDIR/global2localmirror"
 }
@@ -74,26 +74,26 @@ _GETIMAGE_() {
 _PRINTDOWNLOADINGX86_
 if [[ "$DM" = aria2 ]]
 then
-aria2c http://"$CMIRROR/$RPATH/$IFILE".md5
+aria2c http://"$CMIRROR/$RPATH/$IFILE"."$HASHTYPE"
 _ISX86_
 aria2c --continue http://"$CMIRROR/$RPATH/$IFILE"
 elif [[ "$DM" = axel ]]
 then
-axel -a --no-clobber http://"$CMIRROR/$RPATH/$IFILE".md5 ||:
+axel -a --no-clobber http://"$CMIRROR/$RPATH/$IFILE"."$HASHTYPE" ||:
 _ISX86_
 axel -a --no-clobber http://"$CMIRROR/$RPATH/$IFILE" ||:
 elif [[ "$DM" = lftp ]]
 then
-lftpget http://"$CMIRROR/$RPATH"/md5sums.txt || lftpget http://"$CMIRROR/$RPATH"/md5sums.txt
+lftpget http://"$CMIRROR/$RPATH"/"$HASHTYPE"sums.txt || lftpget http://"$CMIRROR/$RPATH"/"$HASHTYPE"sums.txt
 _ISX86_
 lftpget -c http://"$CMIRROR/$RPATH/$IFILE" || lftpget -c http://"$CMIRROR/$RPATH/$IFILE"
 elif [[ "$DM" = wget ]]
 then
-wget "$DMVERBOSE" -N --show-progress http://"$CMIRROR/$RPATH/"md5sums.txt
+wget "$DMVERBOSE" -N --show-progress http://"$CMIRROR/$RPATH/"$HASHTYPE"sums.txt
 _ISX86_
 wget "$DMVERBOSE" --continue --show-progress http://"$CMIRROR/$RPATH/$IFILE"
 else
-curl "$DMVERBOSE" --fail --retry 4 -OL http://"$CMIRROR/$RPATH"/md5sums.txt
+curl "$DMVERBOSE" --fail --retry 4 -OL http://"$CMIRROR/$RPATH"/"$HASHTYPE"sums.txt
 _ISX86_
 curl "$DMVERBOSE" -C - --fail --retry 4 -OL http://"$CMIRROR/$RPATH/$IFILE"
 fi
@@ -102,13 +102,13 @@ fi
 _ISX86_() {
 if [[ "$CPUABI" = "$CPUABIX86" ]]
 then
-IFILE="$(grep i686 md5sums.txt | awk {'print $2'} ||:)"
+IFILE="$(grep i686 "$HASHTYPE"sums.txt | awk {'print $2'} ||:)"
 else
-IFILE="$(grep boot md5sums.txt | awk {'print $2'} ||:)"
+IFILE="$(grep boot "$HASHTYPE"sums.txt | awk {'print $2'} ||:)"
 fi
-sed '2q;d' md5sums.txt > "$IFILE".md5 2>/dev/null ||:
-rm -f md5sums.txt
-rm -f \.md5
+sed '2q;d' "$HASHTYPE"sums.txt > "$IFILE"."$HASHTYPE" 2>/dev/null ||:
+rm -f "$HASHTYPE"sums.txt
+rm -f \."$HASHTYPE"
 _PRINTDOWNLOADINGX86TWO_
 }
 # getimagefunctions.bash FE
