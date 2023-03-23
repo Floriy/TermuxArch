@@ -102,13 +102,15 @@ fi
 _ISX86_() {
 if [[ "$CPUABI" = "$CPUABIX86" ]]
 then
+    hash_array=($(grep i686 "${HASHTYPE}"sums.txt | awk {'print $1'} ||:))
     file_array=($(grep i686 "${HASHTYPE}"sums.txt | awk {'print $2'} ||:))
 else
+    hash_array=($(grep boot "${HASHTYPE}"sums.txt | awk {'print $1'} ||:))
     file_array=($(grep boot "${HASHTYPE}"sums.txt | awk {'print $2'} ||:))
 fi
 IFILE="${file_array[-1]}"
-unset file_array
-sed '2q;d' "${HASHTYPE}"sums.txt > "$IFILE"."$HASHTYPE" 2>/dev/null ||:
+echo "${hash_array[-1]} ${file_array[-1]}" > "$IFILE"."$HASHTYPE" 2>/dev/null ||:
+unset file_array hash_array
 rm -f "$HASHTYPE"sums.txt
 rm -f \."$HASHTYPE"
 _PRINTDOWNLOADINGX86TWO_
