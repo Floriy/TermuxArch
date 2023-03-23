@@ -114,7 +114,15 @@ fi
 _DOMIRROR_() { # partial implementaion: choose the corrrect mirror and test this mirror website
 _DOCEMIRROR_() {
 COUNTRYCODEISO="$(getprop gsm.operator.iso-country)"
-USERCOUNTRYCODE="${COUNTRYCODEISO%%[\ \,]*}"
+# USERCOUNTRYCODE is set to the string after the coma if there's nothing
+# in front of the coma (the string starts with ,). Otherwise it picks the
+# string before the coma
+if [[ ${COUNTRYCODEISO} == ,* ]]
+then
+    USERCOUNTRYCODE="${COUNTRYCODEISO#[\,]*}"
+else
+    USERCOUNTRYCODE="${COUNTRYCODEISO%%[\ \,]*}"
+fi
 if [[ -z "${USERCOUNTRYCODE:-}" ]]
 then
 USERCOUNTRYCODE="$(getprop gsm.sim.operator.iso-country)"
@@ -130,7 +138,7 @@ if [[ $USERCOUNTRYCODE == us ]]
 then
 USERCOUNTRYCODE="edu\/"
 fi
-CHSENMIR="$(grep -w http "$INSTALLDIR/etc/pacman.d/mirrorlist" | grep ^#S | grep "$USERCOUNTRYCODE" | awk 'sub(/^.{1}/,"")' | head -n 1)"
+CHSENMIR="$(grep -w http "${INSTALLDIR}/etc/pacman.d/mirrorlist" | grep '^#S' | grep .\*.${USERCOUNTRYCODE}\/ | awk 'sub(/^.{1}/,"")' | head -n 1)"
 printf "%s\\n" "$CHSENMIR" >> "$INSTALLDIR/etc/pacman.d/mirrorlist"
 printf "Choosing mirror '%s' in file '%s';  Continuing...\\n" "$CHSENMIR" "$INSTALLDIR/etc/pacman.d/mirrorlist"
 DOMIRLCR=0
